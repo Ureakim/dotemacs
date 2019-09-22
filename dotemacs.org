@@ -1,0 +1,159 @@
+* Packages management
+  Configure packages repo
+  #+BEGIN_SRC emacs-lisp
+    (require 'package)
+    (setq package-enable-at-startup nil)
+    (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+    (add-to-list 'package-archives '("melpa-unstable" . "https://melpa.org/packages/"))
+  #+END_SRC
+
+  Install and configure use-package if not already installed
+  #+BEGIN_SRC emacs-lisp
+    (package-initialize)
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package t))
+
+    (setq-default
+     use-package-always-defer t
+     use-package-always-ensure t)
+  #+END_SRC
+
+* UX
+** UI
+   Set default font
+   #+BEGIN_SRC emacs-lisp
+    (set-default-font "Hack-10")
+   #+END_SRC
+
+   Install and load Nord theme
+   #+BEGIN_SRC emacs-lisp
+     (use-package nord-theme
+       :ensure t
+       :pin melpa-stable)
+     (load-theme 'nord t)
+   #+END_SRC
+
+   Disable startup screen
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-splash-screen t
+           initial-scratch-message nil)
+   #+END_SRC
+
+   Visual effect
+   #+BEGIN_SRC emacs-lisp
+     (global-hl-line-mode +1)                ; Highlight the current line
+     (setq-default fill-column '100)         ; Set the max number of characters per line
+     (setq-default word-wrap nil)            ; No word wrapping. never.
+   #+END_SRC
+
+   Disable toolbars
+   #+BEGIN_SRC emacs-lisp
+     (scroll-bar-mode -1)
+     (tool-bar-mode -1)
+     (menu-bar-mode -1)
+   #+END_SRC
+
+   Replace bell sound by the visual bell
+   #+BEGIN_SRC emacs-lisp
+     (setq ring-bell-function 'ignore)
+     (setq visible-bell t)
+   #+END_SRC
+
+   Type 'y' or 'n' instead of 'yes' or 'no'
+   #+BEGIN_SRC emacs-lisp
+     (defalias 'yes-or-no-p 'y-or-n-p)
+   #+END_SRC
+
+** Text Manipulation
+   Delete a region when typing
+   #+BEGIN_SRC emacs-lisp
+     (delete-selection-mode t)
+   #+END_SRC
+   
+   Use Tab to Indentation and completion
+   #+BEGIN_SRC emacs-lisp
+     (setq tab-always-indent 'company-complete)
+   #+END_SRC
+
+   I already have a clipboard, please use it!
+   #+BEGIN_SRC emacs-lisp
+     (setq x-select-enable-clipboard t)
+   #+END_SRC
+
+   Customize indentation
+   #+BEGIN_SRC emacs-lisp
+     (setq-default indent-tabs-mode nil)                            ; Indent with space by default
+     (setq-default tab-width 2)                                     ; indentation size
+     (setq-default backward-delete-char-untabify-method 'hungry)    ; Backspace properly erase the indentation
+     (electric-indent-mode 1)                                       ; Make return key auto indent
+   #+END_SRC
+
+** File Manipulation
+   No backup files
+   #+BEGIN_SRC emacs-lisp
+     (setq make-backup-files nil) ; stop creating backup~ files
+     (setq auto-save-default nil) ; stop creating #autosave# files
+   #+END_SRC
+
+* Modes
+** Misc
+   IDO Mode
+   #+BEGIN_SRC emacs-lisp
+     (setq ido-everywhere t)           ; Enable ido mode globally
+     (setq ido-enable-flex-matching t) ; Activate fuzzy matching
+     (ido-mode 1)                      ; Activate ido mode
+   #+END_SRC
+
+   Ace-window
+   Better window management
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-window
+       :ensure t
+       :pin melpa-stable
+       :bind ("M-p" . ace-window)
+       :config
+       (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+   #+END_SRC
+
+** IDE
+   LSP client
+   #+BEGIN_SRC emacs-lisp
+     (use-package eglot
+       :ensure t
+       :pin melpa-stable)
+   #+END_SRC
+
+   Autocompletion
+   #+BEGIN_SRC emacs-lisp
+     (use-package company
+       :ensure t
+       :pin melpa-stable
+       :bind ("TAB" . company-indent-or-complete-common)
+       :init (add-hook 'after-init-hook 'global-company-mode))
+   #+END_SRC
+
+** Docker
+   Tramp docker
+   #+BEGIN_SRC emacs-lisp
+     (use-package docker-tramp
+       :ensure t
+       :pin melpa-stable)
+   #+END_SRC
+
+** Rust
+   #+BEGIN_SRC emacs-lisp
+     (use-package rust-mode
+       :ensure t
+       :pin melpa-stable
+       :mode ("\\.rs\\'" . rust-mode)
+       :init (setq rust-indent-offset tab-width)
+       :config
+       (add-hook 'rust-mode-hook 'eglot-ensure)
+       (setq rust-format-on-save t))
+   #+END_SRC
+
+** Python
+   #+BEGIN_SRC emacs-lisp
+     (add-hook 'python-mode-hook 'eglot-ensure)
+   #+END_SRC
