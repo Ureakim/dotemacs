@@ -70,11 +70,6 @@
    #+BEGIN_SRC emacs-lisp
      (delete-selection-mode t)
    #+END_SRC
-   
-   Use Tab to Indentation and completion
-   #+BEGIN_SRC emacs-lisp
-     (setq tab-always-indent 'company-complete)
-   #+END_SRC
 
    I already have a clipboard, please use it!
    #+BEGIN_SRC emacs-lisp
@@ -129,8 +124,10 @@
      (use-package company
        :ensure t
        :pin melpa-stable
-       :bind ("TAB" . company-indent-or-complete-common)
-       :init (add-hook 'after-init-hook 'global-company-mode))
+       :config
+       (add-hook 'prog-mode-hook 'company-mode)
+       (setq company-idle-delay 0)
+       (setq company-minimum-prefix-length 1))
    #+END_SRC
 
 ** Docker
@@ -156,4 +153,17 @@
 ** Python
    #+BEGIN_SRC emacs-lisp
      (add-hook 'python-mode-hook 'eglot-ensure)
+   #+END_SRC
+
+** JavaScript
+   #+BEGIN_SRC emacs-lisp
+     (setq-default js-indent-level tab-width)
+   #+END_SRC
+
+** Haxe
+   #+BEGIN_SRC emacs-lisp
+     (use-package haxe-mode
+       :ensure t
+       :pin melpa-stable
+       :mode ("\\.hx\\'" . haxe-mode))
    #+END_SRC
