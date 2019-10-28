@@ -155,6 +155,11 @@
      (add-hook 'python-mode-hook 'eglot-ensure)
    #+END_SRC
 
+** CSS
+   #+BEGIN_SRC emacs-lisp
+     (setq-default css-indent-offset tab-width)
+   #+END_SRC
+
 ** JavaScript
    #+BEGIN_SRC emacs-lisp
      (setq-default js-indent-level tab-width)
