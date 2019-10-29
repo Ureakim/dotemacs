@@ -114,9 +114,21 @@
 ** IDE
    LSP client
    #+BEGIN_SRC emacs-lisp
-     (use-package eglot
+     (use-package lsp-mode
        :ensure t
-       :pin melpa-stable)
+       :pin melpa-stable
+       :commands lsp
+       :config
+       (setq lsp-enable-snippet nil))
+   #+END_SRC
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package company-lsp
+       :ensure t
+       :pin melpa-stable
+       :commands company-lsp
+       :config
+       (push 'company-lsp company-backends))
    #+END_SRC
 
    Autocompletion
@@ -146,13 +158,13 @@
        :mode ("\\.rs\\'" . rust-mode)
        :init (setq rust-indent-offset tab-width)
        :config
-       (add-hook 'rust-mode-hook 'eglot-ensure)
+       (add-hook 'rust-mode-hook 'lsp)
        (setq rust-format-on-save t))
    #+END_SRC
 
 ** Python
    #+BEGIN_SRC emacs-lisp
-     (add-hook 'python-mode-hook 'eglot-ensure)
+     (add-hook 'python-mode-hook 'lsp)
    #+END_SRC
 
 ** CSS
