@@ -177,10 +177,18 @@
      (setq-default js-indent-level tab-width)
    #+END_SRC
 
-** Haxe
+** Web
    #+BEGIN_SRC emacs-lisp
-     (use-package haxe-mode
+     (use-package web-mode
        :ensure t
        :pin melpa-stable
-       :mode ("\\.hx\\'" . haxe-mode))
+       :mode ("\\.html\\'" "\\.js\\'")
+       :config
+       (setq web-mode-markup-indent-offset tab-width)
+       (setq web-mode-css-indent-offset tab-width)
+       (setq web-mode-code-indent-offset tab-width)
+       (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+       (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+       (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+       (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil)))
    #+END_SRC
