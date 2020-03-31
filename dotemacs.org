@@ -116,19 +116,20 @@
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
        :ensure t
-       :pin melpa-stable
+       :pin melpa-unstable
        :commands lsp
        :config
        (setq lsp-enable-snippet nil))
-   #+END_SRC
 
-   #+BEGIN_SRC emacs-lisp
      (use-package company-lsp
        :ensure t
-       :pin melpa-stable
-       :commands company-lsp
+       :pin melpa-unstable
        :config
-       (push 'company-lsp company-backends))
+       (push 'company-lsp company-backends)
+       (setq company-lsp-cache-candidates 'auto)
+       (setq company-lsp-async t)
+       (setq company-lsp-enable-snippet t)
+       (setq company-lsp-enable-recompletion t))
    #+END_SRC
 
    Autocompletion
@@ -138,8 +139,18 @@
        :pin melpa-stable
        :config
        (add-hook 'prog-mode-hook 'company-mode)
-       (setq company-idle-delay 0)
+       (setq company-idle-delay 0.0)
        (setq company-minimum-prefix-length 1))
+   #+END_SRC
+
+   Snippets
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :pin melpa-stable
+       :hook (prog-mode . yas-minor-mode)
+       :config
+       (yas-reload-all))
    #+END_SRC
 
 ** Docker
@@ -159,6 +170,7 @@
        :init (setq rust-indent-offset tab-width)
        :config
        (add-hook 'rust-mode-hook 'lsp)
+       (setq lsp-rust-server 'rust-analyzer)
        (setq rust-format-on-save t))
    #+END_SRC
 
