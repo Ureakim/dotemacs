@@ -116,14 +116,24 @@
    #+BEGIN_SRC emacs-lisp
      (use-package lsp-mode
        :ensure t
-       :pin melpa-unstable
+       :pin melpa-stable
        :commands lsp
+       :init (setq lsp-keymap-prefix "C-c l")
        :config
        (setq lsp-enable-snippet nil))
 
+     (use-package lsp-ui
+       :ensure t
+       :pin melpa-stable
+       :config
+       (setq lsp-ui-doc-enable nil)
+       (unless (display-graphic-p)
+         (custom-set-faces
+          '(lsp-ui-doc-background ((t :background "#000000"))))))
+
      (use-package company-lsp
        :ensure t
-       :pin melpa-unstable
+       :pin melpa-stable
        :config
        (push 'company-lsp company-backends)
        (setq company-lsp-cache-candidates 'auto)
@@ -204,3 +214,4 @@
        (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
        (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil)))
    #+END_SRC
+
