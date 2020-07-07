@@ -44,7 +44,9 @@
    #+BEGIN_SRC emacs-lisp
      (global-hl-line-mode +1)                ; Highlight the current line
      (setq-default fill-column '100)         ; Set the max number of characters per line
-     (setq-default word-wrap nil)            ; No word wrapping. never.
+     (setq-default truncate-lines t)                  ; No line wrapping
+     (setq-default truncate-partial-width-windows t)  ; No line wrapping in split window
+     (setq-default word-wrap nil)                     ; No word wrapping. never.
    #+END_SRC
 
    Disable toolbars
