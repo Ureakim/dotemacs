@@ -23,7 +23,7 @@
 ** UI
    Set default font
    #+BEGIN_SRC emacs-lisp
-    (set-default-font "Hack-10")
+    (set-default-font "Iosevka Fixed SS04-10")
    #+END_SRC
 
    Install and load Nord theme
