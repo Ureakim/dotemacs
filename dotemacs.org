@@ -40,6 +40,11 @@
            initial-scratch-message nil)
    #+END_SRC
 
+   Ask confirm before quit
+   #+BEGIN_SRC emacs-lisp
+     (setq confirm-kill-emacs 'y-or-n-p)
+   #+END_SRC
+
    Visual effect
    #+BEGIN_SRC emacs-lisp
      (global-hl-line-mode +1)                ; Highlight the current line
