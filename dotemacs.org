@@ -85,7 +85,7 @@
 
    Customize indentation
    #+BEGIN_SRC emacs-lisp
-     (setq-default indent-tabs-mode nil)                            ; Indent with space by default
+     (setq-default indent-tabs-mode t)                           ; Indentation can use tab character
      (setq-default tab-width 2)                                     ; indentation size
      (setq-default backward-delete-char-untabify-method 'hungry)    ; Backspace properly erase the indentation
      (electric-indent-mode 1)                                       ; Make return key auto indent
