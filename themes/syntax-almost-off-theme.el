@@ -56,9 +56,9 @@
 	 `(font-lock-type-face ((,class (:foreground ,light-grey))))
    `(font-lock-constant-face ((,class (:foreground ,light-grey))))
 	 
-	 `(font-lock-negation-char-face ((,class (:foreground ,mid-grey :bold t))))
+	 `(font-lock-negation-char-face ((,class (:foreground ,mid-grey))))
 	 `(font-lock-builtin-face ((,class (:foreground ,mid-grey :bold t))))
-   `(font-lock-keyword-face ((,class (:foreground ,mid-grey) :bold t)))
+   `(font-lock-keyword-face ((,class (:foreground ,mid-grey :bold t))))
    `(font-lock-string-face ((,class (:foreground ,mid-grey))))
 	 
    `(font-lock-warning-face ((,class (:foreground ,warning))))
