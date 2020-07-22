@@ -23,15 +23,13 @@
 ** UI
    Set default font
    #+BEGIN_SRC emacs-lisp
-    (set-default-font "Iosevka Fixed SS04-10")
+    (set-default-font "Iosevka Fixed SS04-11")
+    (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
    #+END_SRC
 
-   Install and load Nord theme
+   Enable custom theme
    #+BEGIN_SRC emacs-lisp
-     (use-package nord-theme
-       :ensure t
-       :pin melpa-stable)
-     (load-theme 'nord t)
+    (load-theme 'syntax-almost-off t)
    #+END_SRC
 
    Disable startup screen
@@ -66,6 +64,11 @@
      (setq ring-bell-function 'ignore)
      (setq visible-bell t)
    #+END_SRC
+
+	 Show matching Parens
+	 #+BEGIN_SRC emacs-lisp
+	 (show-paren-mode)
+	 #+END_SRC
 
    Type 'y' or 'n' instead of 'yes' or 'no'
    #+BEGIN_SRC emacs-lisp
@@ -156,8 +159,8 @@
        :pin melpa-stable
        :config
        (add-hook 'prog-mode-hook 'company-mode)
-       (setq company-idle-delay 0.0)
-       (setq company-minimum-prefix-length 1))
+       (setq-default company-idle-delay nil)   ; no autocomplete
+			 (define-key company-mode-map [remap indent-for-tab-command] #'company-indent-or-complete-common)) ; tab for indent or complete
    #+END_SRC
 
    Snippets
