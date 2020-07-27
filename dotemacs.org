@@ -1,227 +1,219 @@
 * Packages management
-  Configure packages repo
-  #+BEGIN_SRC emacs-lisp
-    (require 'package)
-    (setq package-enable-at-startup nil)
-    (add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
-    (add-to-list 'package-archives '("melpa-unstable" . "https://melpa.org/packages/"))
-  #+END_SRC
+	Configure packages repo
+	#+BEGIN_SRC emacs-lisp
+		(require 'package)
+		(setq package-enable-at-startup nil)
+		(add-to-list 'package-archives '("melpa-stable" . "https://stable.melpa.org/packages/"))
+		(add-to-list 'package-archives '("melpa-unstable" . "https://melpa.org/packages/"))
+	#+END_SRC
 
-  Install and configure use-package if not already installed
-  #+BEGIN_SRC emacs-lisp
-    (package-initialize)
-    (unless (package-installed-p 'use-package)
-      (package-refresh-contents)
-      (package-install 'use-package t))
+	Install and configure use-package if not already installed
+	#+BEGIN_SRC emacs-lisp
+		(package-initialize)
+		(unless (package-installed-p 'use-package)
+			(package-refresh-contents)
+			(package-install 'use-package t))
 
-    (setq-default
-     use-package-always-defer t
-     use-package-always-ensure t)
-  #+END_SRC
+		(setq-default
+		 use-package-always-defer t
+		 use-package-always-ensure t)
+	#+END_SRC
 
 * UX
 ** UI
-   Set default font
-   #+BEGIN_SRC emacs-lisp
-    (set-default-font "Iosevka Fixed SS04-11")
-    (add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
-   #+END_SRC
+	 Set default font
+	 #+BEGIN_SRC emacs-lisp
+		(set-default-font "Iosevka Fixed SS04-11")
+		(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
+	 #+END_SRC
 
-   Enable custom theme
-   #+BEGIN_SRC emacs-lisp
-    (load-theme 'syntax-almost-off t)
-   #+END_SRC
+	 Enable custom theme
+	 #+BEGIN_SRC emacs-lisp
+		(load-theme 'syntax-almost-off t)
+	 #+END_SRC
 
-   Disable startup screen
-   #+BEGIN_SRC emacs-lisp
-     (setq inhibit-splash-screen t
-           initial-scratch-message nil)
-   #+END_SRC
+	 Disable startup screen
+	 #+BEGIN_SRC emacs-lisp
+		 (setq inhibit-splash-screen t
+					 initial-scratch-message nil)
+	 #+END_SRC
 
-   Ask confirm before quit
-   #+BEGIN_SRC emacs-lisp
-     (setq confirm-kill-emacs 'y-or-n-p)
-   #+END_SRC
+	 Ask confirm before quit
+	 #+BEGIN_SRC emacs-lisp
+		 (setq confirm-kill-emacs 'y-or-n-p)
+	 #+END_SRC
 
-   Visual effect
-   #+BEGIN_SRC emacs-lisp
-     (global-hl-line-mode +1)                ; Highlight the current line
-     (setq-default fill-column '100)         ; Set the max number of characters per line
-     (setq-default truncate-lines t)                  ; No line wrapping
-     (setq-default truncate-partial-width-windows t)  ; No line wrapping in split window
-     (setq-default word-wrap nil)                     ; No word wrapping. never.
-   #+END_SRC
+	 Visual effect
+	 #+BEGIN_SRC emacs-lisp
+		 (global-hl-line-mode +1)								 ; Highlight the current line
+		 (setq-default fill-column '100)				 ; Set the max number of characters per line
+		 (setq-default truncate-lines t)									; No line wrapping
+		 (setq-default truncate-partial-width-windows t)	; No line wrapping in split window
+		 (setq-default word-wrap nil)											; No word wrapping. never.
+	 #+END_SRC
 
-   Disable toolbars
-   #+BEGIN_SRC emacs-lisp
-     (scroll-bar-mode -1)
-     (tool-bar-mode -1)
-     (menu-bar-mode -1)
-   #+END_SRC
+	 Disable toolbars
+	 #+BEGIN_SRC emacs-lisp
+		 (scroll-bar-mode -1)
+		 (tool-bar-mode -1)
+		 (menu-bar-mode -1)
+	 #+END_SRC
 
-   Replace bell sound by the visual bell
-   #+BEGIN_SRC emacs-lisp
-     (setq ring-bell-function 'ignore)
-     (setq visible-bell t)
-   #+END_SRC
+	 Replace bell sound by the visual bell
+	 #+BEGIN_SRC emacs-lisp
+		 (setq ring-bell-function 'ignore)
+		 (setq visible-bell t)
+	 #+END_SRC
 
 	 Show matching Parens
 	 #+BEGIN_SRC emacs-lisp
 	 (show-paren-mode)
 	 #+END_SRC
 
-   Type 'y' or 'n' instead of 'yes' or 'no'
-   #+BEGIN_SRC emacs-lisp
-     (defalias 'yes-or-no-p 'y-or-n-p)
-   #+END_SRC
+	 Type 'y' or 'n' instead of 'yes' or 'no'
+	 #+BEGIN_SRC emacs-lisp
+		 (defalias 'yes-or-no-p 'y-or-n-p)
+	 #+END_SRC
 
 ** Text Manipulation
-   Delete a region when typing
-   #+BEGIN_SRC emacs-lisp
-     (delete-selection-mode t)
-   #+END_SRC
+	 Delete a region when typing
+	 #+BEGIN_SRC emacs-lisp
+		 (delete-selection-mode t)
+	 #+END_SRC
 
-   I already have a clipboard, please use it!
-   #+BEGIN_SRC emacs-lisp
-     (setq x-select-enable-clipboard t)
-   #+END_SRC
+	 I already have a clipboard, please use it!
+	 #+BEGIN_SRC emacs-lisp
+		 (setq x-select-enable-clipboard t)
+	 #+END_SRC
 
-   Customize indentation
-   #+BEGIN_SRC emacs-lisp
-     (setq-default indent-tabs-mode t)                           ; Indentation can use tab character
-     (setq-default tab-width 2)                                     ; indentation size
-     (setq-default backward-delete-char-untabify-method 'hungry)    ; Backspace properly erase the indentation
-     (electric-indent-mode 1)                                       ; Make return key auto indent
-   #+END_SRC
+	 Customize indentation
+	 #+BEGIN_SRC emacs-lisp
+		 (setq-default indent-tabs-mode t)													 ; Indentation can use tab character
+		 (setq-default tab-width 2)																			; indentation size
+		 (setq-default backward-delete-char-untabify-method 'hungry)		; Backspace properly erase the indentation
+		 (electric-indent-mode 1)																				; Make return key auto indent
+	 #+END_SRC
 
 ** File Manipulation
-   No backup files
-   #+BEGIN_SRC emacs-lisp
-     (setq make-backup-files nil) ; stop creating backup~ files
-     (setq auto-save-default nil) ; stop creating #autosave# files
-   #+END_SRC
+	 No backup files
+	 #+BEGIN_SRC emacs-lisp
+		 (setq make-backup-files nil) ; stop creating backup~ files
+		 (setq auto-save-default nil) ; stop creating #autosave# files
+	 #+END_SRC
 
 * Modes
 ** Misc
-   IDO Mode
-   #+BEGIN_SRC emacs-lisp
-     (setq ido-everywhere t)           ; Enable ido mode globally
-     (setq ido-enable-flex-matching t) ; Activate fuzzy matching
-     (ido-mode 1)                      ; Activate ido mode
-   #+END_SRC
+	 IDO Mode
+	 #+BEGIN_SRC emacs-lisp
+		 (setq ido-everywhere t)					 ; Enable ido mode globally
+		 (setq ido-enable-flex-matching t) ; Activate fuzzy matching
+		 (ido-mode 1)											 ; Activate ido mode
+	 #+END_SRC
 
-   Ace-window
-   Better window management
-   #+BEGIN_SRC emacs-lisp
-     (use-package ace-window
-       :ensure t
-       :pin melpa-stable
-       :bind ("M-p" . ace-window)
-       :config
-       (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
-   #+END_SRC
+	 Ace-window
+	 Better window management
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package ace-window
+			 :ensure t
+			 :pin melpa-stable
+			 :bind ("M-p" . ace-window)
+			 :config
+			 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
+	 #+END_SRC
 
 ** IDE
-   LSP client
-   #+BEGIN_SRC emacs-lisp
-     (use-package lsp-mode
-       :ensure t
-       :pin melpa-stable
-       :commands lsp
-       :init (setq lsp-keymap-prefix "C-c l")
-       :config
-       (setq lsp-enable-snippet nil))
+	 LSP client
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package lsp-mode
+			 :ensure t
+			 :pin melpa-stable
+			 :commands lsp
+			 :init (setq lsp-keymap-prefix "C-c l")
+			 :config
+			 (setq lsp-enable-snippet nil)
+			 (setq-default lsp-prefer-capf t))
 
-     (use-package lsp-ui
-       :ensure t
-       :pin melpa-stable
-       :config
-       (setq lsp-ui-doc-enable nil)
-       (unless (display-graphic-p)
-         (custom-set-faces
-          '(lsp-ui-doc-background ((t :background "#000000"))))))
+		 (use-package lsp-ui
+			 :ensure t
+			 :pin melpa-stable
+			 :config
+			 (setq lsp-ui-doc-enable nil)
+			 (unless (display-graphic-p)
+				 (custom-set-faces
+					'(lsp-ui-doc-background ((t :background "#000000"))))))
+	 #+END_SRC
 
-     (use-package company-lsp
-       :ensure t
-       :pin melpa-stable
-       :config
-       (push 'company-lsp company-backends)
-       (setq company-lsp-cache-candidates 'auto)
-       (setq company-lsp-async t)
-       (setq company-lsp-enable-snippet t)
-       (setq company-lsp-enable-recompletion t))
-   #+END_SRC
-
-   Autocompletion
-   #+BEGIN_SRC emacs-lisp
-     (use-package company
-       :ensure t
-       :pin melpa-stable
-       :config
-       (add-hook 'prog-mode-hook 'company-mode)
-       (setq-default company-idle-delay nil)   ; no autocomplete
+	 Autocompletion
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package company
+			 :ensure t
+			 :pin melpa-stable
+			 :config
+			 (add-hook 'prog-mode-hook 'company-mode)
+			 (setq-default company-backends '(company-capf))
+			 (setq-default company-idle-delay nil)	 ; no autocomplete
 			 (define-key company-mode-map [remap indent-for-tab-command] #'company-indent-or-complete-common)) ; tab for indent or complete
-   #+END_SRC
+	 #+END_SRC
 
-   Snippets
-   #+BEGIN_SRC emacs-lisp
-     (use-package yasnippet
-       :ensure t
-       :pin melpa-stable
-       :hook (prog-mode . yas-minor-mode)
-       :config
-       (yas-reload-all))
-   #+END_SRC
+	 Snippets
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package yasnippet
+			 :ensure t
+			 :pin melpa-stable
+			 :hook (prog-mode . yas-minor-mode)
+			 :config
+			 (yas-reload-all))
+	 #+END_SRC
 
 ** Docker
-   Tramp docker
-   #+BEGIN_SRC emacs-lisp
-     (use-package docker-tramp
-       :ensure t
-       :pin melpa-stable)
-   #+END_SRC
+	 Tramp docker
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package docker-tramp
+			 :ensure t
+			 :pin melpa-stable)
+	 #+END_SRC
 
 ** Rust
-   #+BEGIN_SRC emacs-lisp
-     (use-package rust-mode
-       :ensure t
-       :pin melpa-stable
-       :mode ("\\.rs\\'" . rust-mode)
-       :init (setq rust-indent-offset tab-width)
-       :config
-       (add-hook 'rust-mode-hook 'lsp)
-       (setq lsp-rust-server 'rust-analyzer)
-       (setq rust-format-on-save t))
-   #+END_SRC
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package rust-mode
+			 :ensure t
+			 :pin melpa-stable
+			 :mode ("\\.rs\\'" . rust-mode)
+			 :init (setq rust-indent-offset tab-width)
+			 :config
+			 (add-hook 'rust-mode-hook 'lsp)
+			 (setq lsp-rust-server 'rust-analyzer)
+			 (setq rust-format-on-save t))
+	 #+END_SRC
 
 ** Python
-   #+BEGIN_SRC emacs-lisp
-     (add-hook 'python-mode-hook 'lsp)
-   #+END_SRC
+	 #+BEGIN_SRC emacs-lisp
+		 (add-hook 'python-mode-hook 'lsp)
+	 #+END_SRC
 
 ** CSS
-   #+BEGIN_SRC emacs-lisp
-     (setq-default css-indent-offset tab-width)
-   #+END_SRC
+	 #+BEGIN_SRC emacs-lisp
+		 (setq-default css-indent-offset tab-width)
+	 #+END_SRC
 
 ** JavaScript
-   #+BEGIN_SRC emacs-lisp
-     (setq-default js-indent-level tab-width)
-   #+END_SRC
+	 #+BEGIN_SRC emacs-lisp
+		 (setq-default js-indent-level tab-width)
+	 #+END_SRC
 
 ** Web
-   #+BEGIN_SRC emacs-lisp
-     (use-package web-mode
-       :ensure t
-       :pin melpa-stable
-       :mode ("\\.html\\'" "\\.js\\'")
-       :config
-       (setq web-mode-markup-indent-offset tab-width)
-       (setq web-mode-css-indent-offset tab-width)
-       (setq web-mode-code-indent-offset tab-width)
-       (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-       (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-       (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-       (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil)))
-   #+END_SRC
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package web-mode
+			 :ensure t
+			 :pin melpa-stable
+			 :mode ("\\.html\\'" "\\.js\\'")
+			 :config
+			 (setq web-mode-markup-indent-offset tab-width)
+			 (setq web-mode-css-indent-offset tab-width)
+			 (setq web-mode-code-indent-offset tab-width)
+			 (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
+			 (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
+			 (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
+			 (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil)))
+	 #+END_SRC
 
