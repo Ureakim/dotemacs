@@ -186,11 +186,6 @@
 			 (setq rust-format-on-save t))
 	 #+END_SRC
 
-** Python
-	 #+BEGIN_SRC emacs-lisp
-		 (add-hook 'python-mode-hook 'lsp)
-	 #+END_SRC
-
 ** CSS
 	 #+BEGIN_SRC emacs-lisp
 		 (setq-default css-indent-offset tab-width)
