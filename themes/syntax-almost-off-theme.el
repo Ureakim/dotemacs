@@ -68,8 +68,8 @@
    `(hl-line ((,class (:background  ,black))))
    `(fringe ((,class (:background ,black :foreground ,dark-grey))))
    `(cursor ((,class (:background ,white))))
-   `(show-paren-match ((,class (:inherit highlight))))
-	 `(show-paren-match-expression ((,class (:inherit highlight))))
+   `(show-paren-match ((,class (:background ,mid-grey :foreground ,black))))
+	 `(show-paren-match-expression ((,class (:inherit show-paren-match-expression))))
    `(isearch ((,class (:inherit highlight))))
 	 `(isearch-fail ((,class (:foreground ,warning))))
 	 
@@ -104,7 +104,6 @@
 	 `(ido-first-match ((,class (:foreground ,white :bold t))))
 	 `(ido-subdir ((,class (:foreground ,white :bold t))))
 
-	 ;`(company-echo-common ((,class (:foreground ,light-grey :background ,bg))))
 	 `(company-preview ((,class (:background ,black :foreground ,white))))
 	 `(company-preview-common ((,class (:foreground ,mid-grey))))
 	 `(company-preview-search ((,class (:foreground ,light-grey))))
@@ -122,6 +121,7 @@
 	 `(warning ((,class (:foreground ,warning))))
 	 
    ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+	 ;; `(company-echo-common ((,class (:foreground ,light-grey :background ,bg))))                             ;;
 	 ;; `(org-agenda-structure ((,class (:weight bold :foreground ,fg3 :box (:color ,fg4) :background ,bg3))))  ;;
 	 ;; `(org-agenda-date ((,class (:foreground ,var :height 1.1 ))))																					  ;;
    ;; `(org-agenda-date-weekend ((,class (:weight normal :foreground ,fg4))))																  ;;
@@ -167,15 +167,15 @@
 	 ))
 
 ;;;###autoload
-  (when load-file-name
-    (add-to-list 'custom-theme-load-path
-		 (file-name-as-directory (file-name-directory load-file-name))))
+(when load-file-name
+	(add-to-list 'custom-theme-load-path
+							 (file-name-as-directory (file-name-directory load-file-name))))
 
-  (provide-theme 'syntax-almost-off)
+(provide-theme 'syntax-almost-off)
 
-  ;; Local Variables:
-  ;; no-byte-compile: t
-  ;; End:
+;; Local Variables:
+;; no-byte-compile: t
+;; End:
 
 ;;; syntax-almost-off-theme.el ends here
 
