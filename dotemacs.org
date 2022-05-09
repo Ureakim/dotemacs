@@ -27,15 +27,19 @@
 		(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 	 #+END_SRC
 
-	 Enable custom theme
+	 Enable authothemer for custom theme
 	 #+BEGIN_SRC emacs-lisp
-		(load-theme 'syntax-almost-off t)
+	   (use-package autothemer
+		   :ensure t
+		   :pin melpa-stable)
+
+	   (setq custom--inhibit-theme-enable nil)
+	   (load-theme 'nebulae t)
 	 #+END_SRC
 
 	 Disable startup screen
 	 #+BEGIN_SRC emacs-lisp
-		 (setq inhibit-splash-screen t
-					 initial-scratch-message nil)
+		 (setq inhibit-splash-screen t initial-scratch-message nil)
 	 #+END_SRC
 
 	 Ask confirm before quit
@@ -54,10 +58,10 @@
 
 	 Disable toolbars
 	 #+BEGIN_SRC emacs-lisp
-		 (if (display-graphic-p)
-				 (scroll-bar-mode -1)
-			 (tool-bar-mode -1))
-		 (menu-bar-mode -1)
+	   (if (display-graphic-p)
+	       (scroll-bar-mode -1)
+	       (tool-bar-mode -1))
+	   (menu-bar-mode -1)
 	 #+END_SRC
 
 	 Replace bell sound by the visual bell
