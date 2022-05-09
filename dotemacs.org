@@ -23,7 +23,7 @@
 ** UI
 	 Set default font
 	 #+BEGIN_SRC emacs-lisp
-		(set-default-font "Iosevka Fixed SS04-11")
+		(set-frame-font "Iosevka Fixed SS04-11" nil t)
 		(add-to-list 'custom-theme-load-path "~/.emacs.d/themes/")
 	 #+END_SRC
 
@@ -54,8 +54,9 @@
 
 	 Disable toolbars
 	 #+BEGIN_SRC emacs-lisp
-		 (scroll-bar-mode -1)
-		 (tool-bar-mode -1)
+		 (if (display-graphic-p)
+				 (scroll-bar-mode -1)
+			 (tool-bar-mode -1))
 		 (menu-bar-mode -1)
 	 #+END_SRC
 
@@ -110,37 +111,28 @@
 		 (ido-mode 1)											 ; Activate ido mode
 	 #+END_SRC
 
-	 Ace-window
-	 Better window management
-	 #+BEGIN_SRC emacs-lisp
-		 (use-package ace-window
-			 :ensure t
-			 :pin melpa-stable
-			 :bind ("M-p" . ace-window)
-			 :config
-			 (setq aw-keys '(?a ?s ?d ?f ?g ?h ?j ?k ?l)))
-	 #+END_SRC
-
 ** IDE
 	 LSP client
 	 #+BEGIN_SRC emacs-lisp
 		 (use-package lsp-mode
 			 :ensure t
 			 :pin melpa-stable
-			 :commands lsp
-			 :init (setq lsp-keymap-prefix "C-c l")
-			 :config
-			 (setq lsp-enable-snippet nil)
-			 (setq-default lsp-prefer-capf t))
+			 :commands (lsp lsp-deferred)
+			 :init
+			 (setq lsp-keymap-prefix "C-c l")
+			 :hook
+			 (lsp-mode . lsp-enable-which-key-integration)
+			 (rust-mode .lsp))
 
 		 (use-package lsp-ui
 			 :ensure t
 			 :pin melpa-stable
-			 :config
-			 (setq lsp-ui-doc-enable nil)
-			 (unless (display-graphic-p)
-				 (custom-set-faces
-					'(lsp-ui-doc-background ((t :background "#000000"))))))
+			 :commands lsp-ui-mode)
+
+		 (use-package lsp-treemacs
+			 :ensure t
+			 :pin melpa-stable
+			 :commands lsp-treemacs-errors-list)
 	 #+END_SRC
 
 	 Autocompletion
@@ -155,37 +147,26 @@
 			 (define-key company-mode-map [remap indent-for-tab-command] #'company-indent-or-complete-common)) ; tab for indent or complete
 	 #+END_SRC
 
-	 Snippets
+	 Display available keybindings
 	 #+BEGIN_SRC emacs-lisp
-		 (use-package yasnippet
+		 (use-package which-key
 			 :ensure t
 			 :pin melpa-stable
-			 :hook (prog-mode . yas-minor-mode)
 			 :config
-			 (yas-reload-all))
-	 #+END_SRC
-
-** Docker
-	 Tramp docker
-	 #+BEGIN_SRC emacs-lisp
-		 (use-package docker-tramp
-			 :ensure t
-			 :pin melpa-stable)
+			 (which-key-mode 1)
+			 (which-key-setup-side-window-bottom))
 	 #+END_SRC
 
 ** Rust
 	 #+BEGIN_SRC emacs-lisp
-		 (use-package rust-mode
+		 (use-package rustic
 			 :ensure t
 			 :pin melpa-stable
-			 :mode ("\\.rs\\'" . rust-mode)
-			 :init (setq rust-indent-offset tab-width)
+			 :init
+			 (setq rust-indent-offset tab-width)
 			 :config
-			 (add-hook 'rust-mode-hook 'lsp)
-			 (setq lsp-rust-server 'rust-analyzer)
-			 (setq rust-format-on-save t))
+			 (setq rustic-format-on-save t))
 	 #+END_SRC
-
 ** CSS
 	 #+BEGIN_SRC emacs-lisp
 		 (setq-default css-indent-offset tab-width)
@@ -195,20 +176,3 @@
 	 #+BEGIN_SRC emacs-lisp
 		 (setq-default js-indent-level tab-width)
 	 #+END_SRC
-
-** Web
-	 #+BEGIN_SRC emacs-lisp
-		 (use-package web-mode
-			 :ensure t
-			 :pin melpa-stable
-			 :mode ("\\.html\\'" "\\.js\\'")
-			 :config
-			 (setq web-mode-markup-indent-offset tab-width)
-			 (setq web-mode-css-indent-offset tab-width)
-			 (setq web-mode-code-indent-offset tab-width)
-			 (add-to-list 'web-mode-indentation-params '("lineup-args" . nil))
-			 (add-to-list 'web-mode-indentation-params '("lineup-calls" . nil))
-			 (add-to-list 'web-mode-indentation-params '("lineup-concats" . nil))
-			 (add-to-list 'web-mode-indentation-params '("lineup-ternary" . nil)))
-	 #+END_SRC
-
