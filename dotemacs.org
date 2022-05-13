@@ -118,6 +118,16 @@
 	 #+END_SRC
 
 ** IDE
+	 Vim Keybindings
+	 #+BEGIN_SRC emacs-lisp
+		 (use-package evil
+			 :ensure t
+			 :pin melpa-stable
+			 :demand t
+			 :config
+			 (evil-mode 1))
+	 #+END_SRC
+
 	 LSP client
 	 #+BEGIN_SRC emacs-lisp
 		 (use-package lsp-mode
